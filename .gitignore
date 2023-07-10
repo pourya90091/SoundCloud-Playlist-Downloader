@@ -1,0 +1,4 @@
+*.pyc
+playlists/
+.remaining_tracks.data
+.last_playlist_url.data

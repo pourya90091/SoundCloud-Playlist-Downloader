@@ -21,17 +21,29 @@ try:
     with open(f"{BASE_DIR}/.remaining_tracks.data", "rb") as file:
         remaining_tracks = pickle.load(file)
 
-    if not remaining_tracks:
+    if remaining_tracks:
+        verification = input("\nDo you wanna to continue downloading the last playlist? (Y/n): ")
+
+        if verification == "":
+            verification = "yes"
+
+        verifications = ["y", "Y", "yes", "YES", "Yes", "yea", "yeah"]
+        if not verification in verifications:
+            playlist_url = input("Set playlist url (https://soundcloud.com/<username>/sets/<playlist-name>): ")
+
+            with open(f"{BASE_DIR}/.last_playlist_url.data", "wb") as file:
+                pickle.dump(playlist_url, file)
+        else:
+            if not Path(f"{BASE_DIR}/.last_playlist_url.data").is_file():
+                raise Exception("\".last_playlist_url.data\" is missing")
+
+            with open(f"{BASE_DIR}/.last_playlist_url.data", "rb") as file:
+                playlist_url = pickle.load(file)
+    else:
         playlist_url = input("Set playlist url (https://soundcloud.com/<username>/sets/<playlist-name>): ")
 
         with open(f"{BASE_DIR}/.last_playlist_url.data", "wb") as file:
             pickle.dump(playlist_url, file)
-    else:
-        if not Path(f"{BASE_DIR}/.last_playlist_url.data").is_file():
-            raise Exception("\".last_playlist_url.data\" is missing")
-
-        with open(f"{BASE_DIR}/.last_playlist_url.data", "rb") as file:
-            playlist_url = pickle.load(file)
 
     time_out = input("Set timeout (by default = 0.5): ")
     

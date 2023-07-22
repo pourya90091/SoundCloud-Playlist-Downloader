@@ -88,6 +88,15 @@ def fetch_track_urls() -> list[str]:
                 except:
                     continue
             else:
-                with open(f"{BASE_DIR}/.remaining_tracks.data", "wb") as file:
-                    pickle.dump(track_urls, file)
-                return track_urls
+                verification = input(f"\nDoes your selected playlist have {len(track_urls)} track(s)? (Y/n): ")
+
+                if verification == "":
+                    verification = "yes"
+
+                verifications = ["y", "Y", "yes", "YES", "Yes", "yea", "yeah"]
+                if verification in verifications:
+                    with open(f"{BASE_DIR}/.remaining_tracks.data", "wb") as file:
+                        pickle.dump(track_urls, file)
+                    return track_urls
+                else:
+                    raise Exception("Please check your internet connection and then try again")

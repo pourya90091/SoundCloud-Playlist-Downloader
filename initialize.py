@@ -29,6 +29,12 @@ try:
 
         verifications = ["y", "Y", "yes", "YES", "Yes", "yea", "yeah"]
         if not verification in verifications:
+            with open(f"{BASE_DIR}/.remaining_tracks.data", "wb") as file:
+                pickle.dump(None, file)
+
+            with open(f"{BASE_DIR}/.remaining_tracks.data", "rb") as file:
+                remaining_tracks = pickle.load(file)
+
             playlist_url = input("Set playlist url (https://soundcloud.com/<username>/sets/<playlist-name>): ")
 
             with open(f"{BASE_DIR}/.last_playlist_url.data", "wb") as file:

@@ -97,6 +97,8 @@ def fetch_track_urls() -> list[str]:
                 if verification in verifications:
                     with open(f"{BASE_DIR}/.remaining_tracks.data", "wb") as file:
                         pickle.dump(track_urls, file)
-                    return track_urls
+                    break
                 else:
-                    raise Exception("Please check your internet connection and then try again")
+                    continue
+
+    return track_urls
